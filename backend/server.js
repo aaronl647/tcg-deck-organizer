@@ -19,7 +19,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 .catch(err => console.error('❌ MongoDB connection error:', err));
 
 // Example route
-app.get('/api', (req, res) => {
+app.get('/api/ping', (req, res) => {
   res.json({ message: 'Hello from the backend 👋' });
 });
 
