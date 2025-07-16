@@ -3,12 +3,14 @@ require('dotenv').config()
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const cardRoutes = require('./routes/cards');
 
 const app = express();
 
 // Middleware
 app.use(cors());
 app.use(express.json()); // Parse incoming JSON
+app.use('/api/cards', cardRoutes);
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI, {
@@ -22,6 +24,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 app.get('/api/ping', (req, res) => {
   res.json({ message: 'Hello from the backend 👋' });
 });
+
 
 // Start the server
 const PORT = process.env.PORT || 3001;
