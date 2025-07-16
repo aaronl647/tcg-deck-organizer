@@ -50,7 +50,16 @@ function App() {
             query && <p style={{ color: '#ccc' }}>No cards found.</p>
           )}
         </div>
-        <CardDetails card={selectedCard} onClose={() => setSelectedCard(null)} />
+        <CardDetails
+          card={selectedCard}
+          onClose={() => setSelectedCard(null)}
+          cards={cards}
+          selectedIndex={
+            cards.findIndex(c => c.id === selectedCard?.id
+
+            )}
+
+          setSelectedCard={setSelectedCard} />
 
       </header>
     </div>

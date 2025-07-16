@@ -3,39 +3,35 @@ const axios = require('axios');
 const router = express.Router();
 const Card = require('../models/Card');
 
-
 router.get('/search-external', async (req, res) => {
-  const searchQuery = req.query.q || ''; // get search query from ?q= in URL
+  const q = req.query.q || '';
+  if (!q.trim()) {
+    return res.status(400).json({ error: 'Query parameter q is required' });
+  }
+
+  // Build query string for name only
+  const rawQuery = `name:${q}`;
+  const url = `https://api.pokemontcg.io/v2/cards?q=${encodeURIComponent(rawQuery)}`;
+
+  console.log('➡️ Requesting:', url);
 
   try {
-    const response = await axios.get(`https://api.pokemontcg.io/v2/cards?q=name:${searchQuery}`, {
+    const response = await axios.get(url, {
       headers: {
-        'X-Api-Key': process.env.POKEMON_API_KEY, // your API key from env variables
+        'X-Api-Key': process.env.POKEMON_API_KEY,
       },
     });
 
-    res.json(response.data); // send back the whole API response
+    res.json(response.data);
   } catch (error) {
-    console.error('❌ Error fetching external cards:', error.message);
+    console.error('❌ Error fetching external cards:', {
+      message: error.message,
+      status: error.response?.status,
+      data: error.response?.data,
+    });
+
     res.status(500).json({ error: 'Failed to fetch cards from external API' });
   }
 });
 
 module.exports = router;
-
-
-
-// router.get('/', async (req, res) => {
-//   const searchQuery = req.query.search || '';
-
-//   try {
-//     const cards = await Card.find({
-//       name: { $regex: searchQuery, $options: 'i' }, // case-insensitive search
-//     });
-//     res.json({ data: cards });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ error: 'Server error' });
-//   }
-// });
-

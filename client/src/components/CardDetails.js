@@ -1,16 +1,41 @@
 import React from 'react';
 import './CardDetails.css';
 
-const CardDetails = ({ card, onClose }) => {
+const CardDetails = ({ card, onClose, cards, selectedIndex, setSelectedCard  }) => {
     if (!card) return null;
 
     const stopPropagation = (e) => e.stopPropagation();
+
+    const goPrev = () => {
+    if (selectedIndex > 0) {
+      setSelectedCard(cards[selectedIndex - 1]);
+    }
+  };
+
+  const goNext = () => {
+    if (selectedIndex < cards.length - 1) {
+      setSelectedCard(cards[selectedIndex + 1]);
+    }
+  };
+
 
     return (
         <div className="card-details-backdrop" onClick={onClose}>
             <div className="card-details-modal" onClick={stopPropagation}>
                 <button className="card-details-close-btn" onClick={onClose} aria-label="Close">✖</button>
+                <button
+          className="nav-btn left-btn"
+          onClick={goPrev}
+          disabled={selectedIndex === 0}
+          aria-label="Previous card"
+        >←</button>
 
+        <button
+          className="nav-btn right-btn"
+          onClick={goNext}
+          disabled={selectedIndex === cards.length - 1}
+          aria-label="Next card"
+        >→</button>
                 <img
                     className="card-details-image"
                     src={card.images?.large || card.images?.small}

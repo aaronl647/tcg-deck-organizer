@@ -57,3 +57,36 @@
   border: none;
   cursor: pointer;
 }
+
+.nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #eee;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+  cursor: pointer;
+  user-select: none;
+  box-shadow: 0 0 5px #0003;
+  transition: background-color 0.3s;
+}
+
+.nav-btn:hover:not(:disabled) {
+  background-color: #ccc;
+}
+
+.nav-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.left-btn {
+  left: 10px;
+}
+
+.right-btn {
+  right: 10px;
+}
