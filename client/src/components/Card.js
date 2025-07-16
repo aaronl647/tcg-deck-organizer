@@ -24,16 +24,15 @@ const Card = ({ card }) => {
           </span>
         </div>
       )}
-      <img
-        src={card.images.small}
-        alt={card.name}
-        onLoad={() => setLoaded(true)}
-        style={{
+      <img src={card.images.small} 
+      alt={card.name} 
+      onLoad={() => setLoaded(true)} 
+      style={{
           width: '100%',
           height: '100%',
           display: loaded ? 'block' : 'none',
           borderRadius: '8px'
-        }} />
+        }}/>
       <p>{card.name}</p>
     </div>
   );
