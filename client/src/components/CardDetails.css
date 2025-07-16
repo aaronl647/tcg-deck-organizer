@@ -1,0 +1,59 @@
+/* CardDetails.css */
+
+.card-details-backdrop {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.card-details-modal {
+  background: #282c34;
+  padding: 20px;
+  border-radius: 12px;
+  font-size: 18px;
+  line-height: 1.4;
+  width: 100%;
+  max-width: 600px;
+  max-height: 90%;
+  overflow-y: auto;
+  box-shadow: 0 0 12px #000;
+  position: relative;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.card-details-image {
+  width: 60%; 
+  max-width: 400px;
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+.card-details-info {
+  width: 60%;            
+  overflow-y: auto;
+}
+.card-details-attacks > div {
+  margin-bottom: 10px;
+}
+
+.card-details-attacks strong {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+
+.card-details-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
