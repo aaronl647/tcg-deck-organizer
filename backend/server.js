@@ -4,6 +4,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const cardRoutes = require('./routes/cards');
+const deckRoutes = require('./routes/decks');
 
 const app = express();
 
@@ -11,6 +12,7 @@ const app = express();
 app.use(cors());
 app.use(express.json()); // Parse incoming JSON
 app.use('/api/cards', cardRoutes);
+app.use('/api/decks', deckRoutes);
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI, {
