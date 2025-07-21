@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 import Card from '../../components/Card/Card';
 import CardDetails from '../../components/CardDetails/CardDetails';
 import SearchInput from '../../components/SearchInput/SearchInput';
@@ -10,6 +11,8 @@ function SearchPage() {
     const [query, setQuery] = useState('');
     const [allNames, setAllNames] = useState([]);
     const [selectedCard, setSelectedCard] = useState(null);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios.get('http://localhost:3001/api/cards/all-names')
@@ -36,7 +39,7 @@ function SearchPage() {
     return(
             <div className="App">
       <header className="App-header">
-        <h3>TCG Deck Organizer</h3>
+        <h3 onClick={() => navigate('/')}>TCG Deck Organizer</h3>
         <div style={{ position: 'relative', width: '100%', maxWidth: '400px' }}>
           <SearchInput query={query} setQuery={setQuery} allNames={allNames} />
         </div>

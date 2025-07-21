@@ -1,0 +1,23 @@
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.custom-button {
+  padding: 12px 24px;
+  background-color: #1e90ff;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  user-select: none;
+  text-align: center;
+  min-width: 120px;
+}
+
+.custom-button:hover {
+  background-color: #187bcd;
+}
