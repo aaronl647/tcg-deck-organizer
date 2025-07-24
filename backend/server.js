@@ -3,6 +3,7 @@ require('dotenv').config()
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const authRoutes = require('./routes/auth');
 const cardRoutes = require('./routes/cards');
 const deckRoutes = require('./routes/decks');
 
@@ -27,6 +28,7 @@ app.get('/api/ping', (req, res) => {
   res.json({ message: 'Hello from the backend 👋' });
 });
 
+app.use('/api/auth', authRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 3001;

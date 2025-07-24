@@ -7,37 +7,41 @@ import SearchInput from '../../components/SearchInput/SearchInput';
 
 
 function SearchPage() {
-    const [cards, setCards] = useState([]);
-    const [query, setQuery] = useState('');
-    const [allNames, setAllNames] = useState([]);
-    const [selectedCard, setSelectedCard] = useState(null);
+  const [cards, setCards] = useState([]);
+  const [query, setQuery] = useState('');
+  const [allNames, setAllNames] = useState([]);
+  const [selectedCard, setSelectedCard] = useState(null);
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        axios.get('http://localhost:3001/api/cards/all-names')
-            .then(res => setAllNames(res.data.names))
-            .catch(err => console.error('Error fetching all names:', err));
-    }, []);
+  useEffect(() => {
+    axios.get('http://localhost:3001/api/cards/all-names')
+      .then(res => {
+        // console.log(res.data.data);
+        setAllNames(res.data.names)})
+      .catch(err => console.error('Error fetching all names:', err));
+  }, []);
 
-    useEffect(() => {
-        if (!query.trim()) {
-            setCards([]);
-            return;
-        }
+  useEffect(() => {
+    if (!query.trim()) {
+      setCards([]);
+      return;
+    }
 
-        const delayDebounce = setTimeout(() => {
-            axios
-                .get(`http://localhost:3001/api/cards/search-external?q=${encodeURIComponent(query)}`)
-                .then(res => setCards(res.data.data || []))
-                .catch(err => console.error(err));
-        }, 500);
+    const delayDebounce = setTimeout(() => {
+      axios
+        .get(`http://localhost:3001/api/cards/search-external?q=${encodeURIComponent(query)}`)
+        .then(res => {
+          setCards(res.data.data || [])
+        })
+        .catch(err => console.error(err));
+    }, 500);
 
-        return () => clearTimeout(delayDebounce);
-    }, [query]);
+    return () => clearTimeout(delayDebounce);
+  }, [query]);
 
-    return(
-            <div className="App">
+  return (
+    <div className="App">
       <header className="App-header">
         <h3 onClick={() => navigate('/')}>TCG Deck Organizer</h3>
         <div style={{ position: 'relative', width: '100%', maxWidth: '400px' }}>
@@ -56,18 +60,18 @@ function SearchPage() {
           )}
         </div>
         <div style={{ position: 'relative', width: '100%', maxWidth: '400px' }}>
-        <CardDetails
-          card={selectedCard}
-          onClose={() => setSelectedCard(null)}
-          cards={cards}
-          selectedIndex={
-            cards.findIndex(c => c.id === selectedCard?.id
-            )}
-          setSelectedCard={setSelectedCard} />
-          </div>
+          <CardDetails
+            card={selectedCard}
+            onClose={() => setSelectedCard(null)}
+            cards={cards}
+            selectedIndex={
+              cards.findIndex(c => c.id === selectedCard?.id
+              )}
+            setSelectedCard={setSelectedCard} />
+        </div>
       </header>
     </div>
-    )
+  )
 }
 
 export default SearchPage;
