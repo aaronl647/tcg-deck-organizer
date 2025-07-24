@@ -21,7 +21,7 @@ router.post('/signup', async (req, res) => {
         // Create and save the new user
         const newUser = new User({
             email,
-            password: hashedPassword,
+            passwordHash: hashedPassword,
         });
 
         await newUser.save();
@@ -36,7 +36,7 @@ router.post('/signup', async (req, res) => {
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
-    if (!user || !(await bcrypt.compare(password, user.password))) {
+    if (!user || !(await bcrypt.compare(password, user.passwordHash))) {
         return res.status(401).json({ error: 'Invalid credentials' });
     }
 
