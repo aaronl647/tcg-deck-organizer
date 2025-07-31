@@ -16,7 +16,7 @@ function App() {
                      <div className="custom-button" onClick={() => navigate('/deck-creator')}>
                         Add New Deck
                     </div>
-                    <div className="custom-button" onClick={() => console.log("View Collection clicked")}>
+                    <div className="custom-button" onClick={() => navigate("/collection")}>
                         View Collection
                     </div>
                 </div>

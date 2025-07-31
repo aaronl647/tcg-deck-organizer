@@ -38,7 +38,6 @@ export default function AddDeckForm({ userId }) {
     const cards = parseDeck(deckText);
 
     try {
-      console.log('Uploading deck:', { userId, name: 'Imported Deck', cards });
       const response = await axios.post('http://localhost:3001/api/decks', {
         userId,
         name: 'Imported Deck',

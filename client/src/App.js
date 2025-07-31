@@ -6,12 +6,13 @@ import Home from './pages/Home/Home';
 import AddDeckForm from './components/AddDeckForm/AddDeckForm';
 import LoginPage from './pages/LoginPage/LoginPage';
 import SignupPage from './pages/SignupPage/SignupPage';
+import DecksPage from './components/DecksPage/DecksPage';
 
 function App() {
   const token = localStorage.getItem('token');
   let userId = null;
 
-   if (token) {
+  if (token) {
     try {
       const decoded = jwtDecode(token);
       userId = decoded.userId;
@@ -32,6 +33,7 @@ function App() {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/search" element={isAuthenticated ? <SearchPage /> : <Navigate to="/login" replace />} />
       <Route path="/deck-creator" element={isAuthenticated ? <AddDeckForm userId={userId} /> : <Navigate to="/login" replace />} />
+      <Route path="/collection" element={isAuthenticated ? <DecksPage />: <Navigate to="/login" replace /> } />
     </Routes>
   );
 }
