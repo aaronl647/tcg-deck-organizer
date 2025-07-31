@@ -14,16 +14,13 @@ function App() {
    if (token) {
     try {
       const decoded = jwtDecode(token);
-      userId = decoded.userId;  // Adjust if your token uses a different key name
+      userId = decoded.userId;
     } catch (error) {
       console.error('Failed to decode token:', error);
-      // Optionally clear invalid token
-      // localStorage.removeItem('token');
     }
   }
 
   const isAuthenticated = !!token;
-
 
   return (
     <Routes>
@@ -40,27 +37,3 @@ function App() {
 }
 
 export default App;
-
-
-
-// import './App.css';
-// import { Routes, Route } from 'react-router-dom';
-// import SearchPage from './pages/SearchPage/SearchPage'
-// import Home from './pages/Home/Home';
-// import AddDeckForm from './components/AddDeckForm/AddDeckForm';
-// import LoginPage from './pages/LoginPage';
-
-// function App() {
-  
-//   return (
-//       <Routes>
-//         <Route path='/' element={<Home />} />
-//         <Route path="/search" element={<SearchPage />} />
-//         <Route path="/deck-creator" element={<AddDeckForm />} />
-//       </Routes>
-//   );
-// }
-
-// export default App;
-
-
