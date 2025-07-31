@@ -1,5 +1,6 @@
 import './App.css';
 import { Routes, Route, Navigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 import SearchPage from './pages/SearchPage/SearchPage';
 import Home from './pages/Home/Home';
 import AddDeckForm from './components/AddDeckForm/AddDeckForm';
@@ -7,8 +8,22 @@ import LoginPage from './pages/LoginPage/LoginPage';
 import SignupPage from './pages/SignupPage/SignupPage';
 
 function App() {
-  const isAuthenticated = !!localStorage.getItem('token'); // basic auth check
+  const token = localStorage.getItem('token');
   let userId = null;
+
+   if (token) {
+    try {
+      const decoded = jwtDecode(token);
+      userId = decoded.userId;  // Adjust if your token uses a different key name
+    } catch (error) {
+      console.error('Failed to decode token:', error);
+      // Optionally clear invalid token
+      // localStorage.removeItem('token');
+    }
+  }
+
+  const isAuthenticated = !!token;
+
 
   return (
     <Routes>
