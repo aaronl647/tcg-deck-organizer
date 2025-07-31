@@ -1,41 +1,76 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
-const AddDeckForm = () => {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [cards, setCards] = useState('');
-  
-  const navigate = useNavigate();
+export default function AddDeckForm({ userId }) {
+  const [deckText, setDeckText] = useState('');
+  const [uploading, setUploading] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const cardArray = cards.split(',').map(card => card.trim());
-      const response = await axios.post('/api/decks', { name, description, cards: cardArray });
-      console.log('Deck added:', response.data);
-      setName('');
-      setDescription('');
-      setCards('');
-    } catch (error) {
-      console.error('Error adding deck:', error);
+  const parseDeck = (text) => {
+    const lines = text.split('\n').map(line => line.trim()).filter(Boolean);
+    const cards = [];
+
+    let section = null;
+
+    for (const line of lines) {
+      if (line.startsWith('Pokémon')) section = 'pokemon';
+      else if (line.startsWith('Trainer')) section = 'trainer';
+      else if (line.startsWith('Energy')) section = 'energy';
+      else if (line.match(/^\d+\s/)) {
+        const match = line.match(/^(\d+)\s(.+?)\s([A-Z]+)\s(\d+)$/);
+        if (match) {
+          const [, count, name, setCode, setNumber] = match;
+          cards.push({
+            name,
+            setCode,
+            setNumber,
+            count: parseInt(count),
+            category: section,
+          });
+        }
+      }
     }
+
+    return cards;
+  };
+
+  const handleUpload = async () => {
+    setUploading(true);
+    const cards = parseDeck(deckText);
+
+    try {
+      console.log('Uploading deck:', { userId, name: 'Imported Deck', cards });
+      const response = await axios.post('http://localhost:3001/api/decks', {
+        userId,
+        name: 'Imported Deck',
+        cards, 
+      });
+
+      alert('Deck uploaded successfully!');
+    } catch (err) {
+      console.error('Upload error:', err);
+      alert('Failed to upload deck.');
+    }
+
+    setUploading(false);
   };
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h3 onClick={() => navigate('/')}>TCG Deck Organizer</h3>
-      <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="Deck name" value={name} onChange={e => setName(e.target.value)} required />
-        <textarea placeholder="Description" value={description} onChange={e => setDescription(e.target.value)} />
-        <input type="text" placeholder="Cards (comma-separated)" value={cards} onChange={e => setCards(e.target.value)} />
-        <button type="submit">Add Deck</button>
-      </form>
-      </header>
+    <div className="p-4 max-w-xl mx-auto">
+      <h2 className="text-xl font-bold mb-2">Upload Deck</h2>
+      <textarea
+        value={deckText}
+        onChange={(e) => setDeckText(e.target.value)}
+        rows={15}
+        className="w-full border p-2 rounded"
+        placeholder="Paste deck list here..."
+      />
+      <button
+        onClick={handleUpload}
+        disabled={uploading}
+        className="mt-2 px-4 py-2 bg-blue-600 text-white rounded"
+      >
+        {uploading ? 'Uploading...' : 'Upload Deck'}
+      </button>
     </div>
   );
-};
-
-export default AddDeckForm;
+}

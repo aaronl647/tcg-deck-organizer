@@ -3,13 +3,19 @@ const router = express.Router();
 const Deck = require('../models/Deck');
 
 router.post('/', async (req, res) => {
+  const { userId, name, cards } = req.body;
+
+  if (!userId || !name || !cards) {
+    return res.status(400).json({ error: 'Missing fields' });
+  }
+
   try {
-    const { name, description, cards } = req.body;
-    const newDeck = new Deck({ name, description, cards });
+    const newDeck = new Deck({ userId, name, cards });
     await newDeck.save();
-    res.status(201).json(newDeck);
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to create deck' });
+    res.status(201).json({ message: 'Deck saved successfully' });
+  } catch (error) {
+    console.error('Error saving deck:', error);
+    res.status(500).json({ error: 'Failed to save deck' });
   }
 });
 

@@ -14,14 +14,10 @@ function App() {
                         Search Cards
                     </div>
                      <div className="custom-button" onClick={() => navigate('/deck-creator')}>
-                        Add Decks
+                        Add New Deck
                     </div>
-                    <div className="custom-button" onClick={() => console.log("View Decks clicked")}>
-                        View Decks
-                    </div>
-
-                    <div className="custom-button" onClick={() => console.log("View Cards clicked")}>
-                        View Cards
+                    <div className="custom-button" onClick={() => console.log("View Collection clicked")}>
+                        View Collection
                     </div>
                 </div>
             </header>

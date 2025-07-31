@@ -8,6 +8,7 @@ import SignupPage from './pages/SignupPage/SignupPage';
 
 function App() {
   const isAuthenticated = !!localStorage.getItem('token'); // basic auth check
+  let userId = null;
 
   return (
     <Routes>
@@ -18,7 +19,7 @@ function App() {
       <Route path="/signup" element={<SignupPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/search" element={isAuthenticated ? <SearchPage /> : <Navigate to="/login" replace />} />
-      <Route path="/deck-creator" element={isAuthenticated ? <AddDeckForm /> : <Navigate to="/login" replace />} />
+      <Route path="/deck-creator" element={isAuthenticated ? <AddDeckForm userId={userId} /> : <Navigate to="/login" replace />} />
     </Routes>
   );
 }
