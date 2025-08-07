@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Deck = require('../models/Deck');
-
+const Card = require('../models/Card')
 
 // POST user decks
 router.post('/', async (req, res) => {

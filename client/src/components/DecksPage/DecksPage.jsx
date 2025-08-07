@@ -26,7 +26,7 @@ const DecksPage = () => {
             <h2 className="text-xl font-semibold text-blue-600">{deck.name}</h2>
             <p className="text-sm text-gray-500">{deck.cards?.length || 0} cards</p>
             {/* Optional preview */}
-            {deck.cards?.slice(0, 62).map((card, index) => (
+            {deck.cards?.slice(0, 61).map((card, index) => (
               <p key={index} className="text-gray-700 text-sm truncate">• {card.name}</p>
             ))}
           </div>
